@@ -1,0 +1,54 @@
+<header class="header">
+  <div class="top-bar">
+    <!-- Left Side: Logo & Shop Title -->
+    <div class="left logo-title">
+      <img src="assets/logo.png" alt="Claudius Gold Coins Logo" class="logo">
+      <h1 class="shop-title">Claudius Gold Coins</h1>
+    </div>
+
+    <!-- Middle Section: Navigation Menu -->
+
+    <nav class="navbar">
+      <ul class="menu">
+        <li class="menu-item">
+          <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="menu-link">
+            Acasă</a>
+        </li>
+
+        <li class="menu-item dropdown">
+          <a class="menu-link dropdown-toggle" href="#" id="productsDropdown" data-bs-toggle="dropdown">
+            Shop
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Electronics</a></li>
+            <li><a class="dropdown-item" href="#">Clothing</a></li>
+            <li><a class="dropdown-item" href="#">Accessories</a></li>
+          </ul>
+        </li>
+
+        <li class="menu-item">
+          <a routerLink="/about-us" routerLinkActive="active-link" class="menu-link">Despre noi</a>
+        </li>
+        <li class="menu-item">
+          <a class="menu-link" href="#">Events</a>
+        </li>
+        <li class="menu-item">
+          <a class="menu-link" href="#">Claudius Gold Coins & Amanet</a>
+        </li>
+        <li class="menu-item">
+          <a class="menu-link" href="#">Contact</a>
+        </li>
+        <li class="menu-item">
+          <a class="menu-link" href="https://goldprice.org">Gold Price</a>
+        </li>
+        <li class="menu-item">
+          <a class="menu-link" href="https://www.kitco.com/charts/gold">Kitco</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="right">
+      <button class="btn btn-primary login-btn" routerLink="/login">Login</button>
+    </div>
+  </div>
+</header>
