@@ -30,8 +30,7 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets",
-              "logo.png"
+              "src/assets"
             ],
             "styles": [
               "src/styles/styles.scss",
