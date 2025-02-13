@@ -5,9 +5,10 @@ import { MENU_ITEMS } from '../../data/Constants/HeaderMenuItems';
 import { WindowRefService } from '../../shared/services/window-ref.service';
 import { Subscription } from 'rxjs';
 import { HamburgerMenuComponent } from './hamburger-menu/hamburger-menu.component';
+import { UserActionsHeaderComponent } from "./user-actions-header/user-actions-header.component";
 @Component({
   selector: 'app-header',
-  imports: [RouterModule,HamburgerMenuComponent],
+  imports: [RouterModule, HamburgerMenuComponent, UserActionsHeaderComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

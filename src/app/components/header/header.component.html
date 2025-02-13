@@ -36,11 +36,15 @@
           }
         </ul>
       </nav>
-      <div class="right">
-        <button class="btn btn-primary login-btn" routerLink="/login">Login</button>
-      </div>
       }@else {
         <app-hamburger-menu></app-hamburger-menu>
       }   
+      @if (screenWidth > 1250) {
+        <div class="right">
+          <app-user-actions-header></app-user-actions-header>
+        </div>
+      }
+      
   </div>
+ 
 </header>

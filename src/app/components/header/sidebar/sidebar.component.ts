@@ -2,10 +2,11 @@ import { RouterModule } from '@angular/router';
 import { MenuItemModel } from '../../../shared/models/MenuItemModel';
 import { MENU_ITEMS } from './../../../data/Constants/HeaderMenuItems';
 import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import { UserActionsHeaderComponent } from "../user-actions-header/user-actions-header.component";
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterModule],
+  imports: [RouterModule, UserActionsHeaderComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
