@@ -8,7 +8,7 @@ const title = 'Claudius Gold Coins SRL';
 export const routes: Routes = [
   { path: '', component: HomeComponent, data: { title: 'Acasa | ' + title } },
   {
-    path: 'about-us',
+    path: 'despre-noi',
     component: AboutComponent,
     data: { title: 'Despre Noi  | ' + title },
   },

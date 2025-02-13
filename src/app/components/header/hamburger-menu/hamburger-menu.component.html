@@ -1,0 +1,8 @@
+<nav class="navbar navbar">
+  <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+@if (isSidebarOpen) {
+<app-sidebar (closeSidebar)="toggleSidebar()"></app-sidebar>
+}

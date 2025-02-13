@@ -1,0 +1,37 @@
+<div class="sidebar">
+    <button class="close-btn" (click)="close()">×</button>
+  
+    <nav class="navbar">
+      <ul class="menu">
+        @for (menuItem of menuItems; track $index) {
+            <li class="menu-item">
+                @if (menuItem.isInternal) {
+                    <ng-container>
+                        <a [routerLink]="menuItem.link" routerLinkActive="active-link" 
+                          [routerLinkActiveOptions]="{ exact: true }" class="menu-link" (click)="close()">
+                            {{ menuItem.name }}
+                        </a>
+              
+                        @if (menuItem.childs.length > 0) {
+                            <ul class="dropdown-menu">
+                                @for (childItem of menuItem.childs; track $index) {
+                                    <li>
+                                        <a class="dropdown-item" [routerLink]="childItem.link" (click)="close()">
+                                          {{ childItem.name }}
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                      </ng-container>
+                }@else {
+                    <a class="menu-link" [href]="menuItem.link" target="_blank">
+                        {{ menuItem.name }}
+                    </a>
+                }
+              </li>
+        }
+      </ul>
+    </nav>
+  </div>
+  

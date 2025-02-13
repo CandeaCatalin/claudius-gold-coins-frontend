@@ -6,41 +6,12 @@
   color: black;
   padding: 10px 20px;
   font-family: trirong;
-/* HAMBURGER BUTTON */
-.hamburger {
-  display: none; /* Hidden on large screens */
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+  height: 20vh;
 
-/* RESPONSIVE MENU */
-@media screen and (max-width: 768px) {
-  .hamburger {
-    display: block; /* Show button on small screens */
-  }
-
-  nav {
-    display: none; /* Hide menu by default */
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: white;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  nav.open {
-    display: flex; /* Show menu when toggled */
-  }
-}
   .top-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 
     .logo-title{
       display: flex;
@@ -49,15 +20,17 @@
     .left {
       display: flex;
       align-items: center;
+      width: 30%;
 
       .logo {
-        height: 20vh;
+        height: 15vh;
         margin-right: 10px;
       }
 
       .shop-title {
         font-size: 25px;
         font-weight: bold;
+        text-align: center;
       }
     }
 
@@ -114,9 +87,6 @@
           &:hover .dropdown-menu {
             display: block;
           }
-          &:hover {
-            border-bottom: 2px solid var(--primary); /* Underline on hover */
-          }
           .active-link {
             border-bottom: 2px solid var(--primary); /* Underline for active page */
             font-weight: bold;
@@ -130,6 +100,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-top:15px;
 
       .flag-btn {
         background: none;
