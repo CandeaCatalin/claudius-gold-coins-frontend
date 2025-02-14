@@ -8,10 +8,11 @@ import {
 import { HeaderComponent } from './components/header/header.component';
 import { Title } from '@angular/platform-browser';
 import { filter, map } from 'rxjs';
+import { FooterComponent } from "./components/footer/footer.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-actions-header',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './user-actions-header.component.html',
   styleUrl: './user-actions-header.component.scss'
 })
