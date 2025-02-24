@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 
 const title = 'Claudius Gold Coins SRL';
 
@@ -35,6 +36,11 @@ export const routes: Routes = [
     path: 'terms-and-conditions',
     component: TermsAndConditionsComponent,
     data: { title: 'Terms & Conditions  | ' + title },
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    data: { title: 'Privacy Policy  | ' + title },
   },
   // { path: 'products/:id', component: ProductDetailsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // Handle unknown routes
