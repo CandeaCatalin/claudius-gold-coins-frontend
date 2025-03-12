@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './about.component.scss'
 })
 export class AboutComponent {
-
+  public numbers = Array.from({ length: 60}, (_, i) => i + 1);
 }
