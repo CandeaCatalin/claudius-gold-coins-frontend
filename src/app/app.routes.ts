@@ -8,6 +8,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { AmanetComponent } from './pages/amanet/amanet.component';
+import { ProductsComponent } from './pages/products/products.component';
 
 const title = 'Claudius Gold Coins SRL';
 
@@ -47,6 +48,11 @@ export const routes: Routes = [
     path: 'claudius-gold-coins-and-amanet-deva',
     component: AmanetComponent,
     data: { title: 'Claudius Gold Coins & Amanet  | ' + title },
+  },
+  {
+    path: 'category/:category',
+    component: ProductsComponent,
+    data: { title: 'Products | ' + title },
   },
   // { path: 'products/:id', component: ProductDetailsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // Handle unknown routes

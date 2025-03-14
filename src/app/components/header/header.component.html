@@ -2,14 +2,14 @@
   <header class="header">
     <div class="top-bar">
       <!-- Left Side: Logo & Shop Title -->
-      <div [ngClass]="screenWidth > 800? 'left logo-title': 'left'">
+      <div [ngClass]="screenWidth > 1280? 'left logo-title': 'left'">
         <img src="assets/logo.png" alt="Claudius Gold Coins Logo" class="logo">
         <h1 class="site-title">Claudius Gold Coins</h1>
       </div>
   
       <!-- Middle Section: Navigation Menu -->
       
-        @if (screenWidth > 1250) {
+        @if (screenWidth > 1280) {
         <nav class="navbar">
           <ul class="menu">
             @for (menuItem of menuItems; track $index) {
@@ -40,7 +40,7 @@
         }@else {
           <app-hamburger-menu></app-hamburger-menu>
         }   
-        @if (screenWidth > 1250) {
+        @if (screenWidth > 1280) {
           <div class="right">
             <app-user-actions-header></app-user-actions-header>
           </div>
