@@ -23,8 +23,8 @@
   /* Button-like styling for anchor tags */
   .btn {
     text-decoration: none;
-    color: white;
-    background: var(--primary); /* Blue color */
+    color: black;
+    background: inherit; /* Blue color */
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 1rem;
@@ -33,8 +33,7 @@
   }
   
   .btn:hover {
-    background: var(--primary); /* Darker blue on hover */
-    transform: scale(1.05);
+    transform: scale(1.05);  
   }
   
   .btn:active {
@@ -49,6 +48,6 @@
 
   .cart-icon{
     height: 24px;
-    color: white;
+    color: black;
   }
   

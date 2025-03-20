@@ -1,91 +1,93 @@
-<footer class="footer">
-    <div class="footer-container">
-        @if (screenWidth > 800) {
-            <div class="footer-section logo-section">
-                <img src="assets/logo.png" alt="Claudius Gold Coins Logo" class="logo">
-                <h1 class="site-title">Claudius Gold Coins</h1>
-                <h2 class="quote">"Nu dați banii pe prostii, investiți  pentru copii"</h2>
-            </div>    
-        }
-      
-        @if (screenWidth >550) {
-            <div class="footer-section">
-                <h3>Meniu</h3>
-                <ul>
-                    @for (menuItem of menuItems; track $index) {
-                        <li class="menu-item">
-                            @if (menuItem.isInternal) {
-                            <a [routerLink]="menuItem.link" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="menu-link">
-                                {{menuItem.name}}  
-                            </a>
-                            }@else {
-                                <a class="menu-link" [href]="menuItem.link"  target="_blank"> {{menuItem.name}} </a>
-                            }
-                        </li>
-                        }
-                </ul>
-            </div>
-        }
+@if(display){
 
-        @if (screenWidth > 1300) {
-            <div class="footer-section">
-                <h3>Social media</h3>
-                <ul>
-                    <li> 
-                        <a href="https://www.facebook.com/profile.php?id=100012720152590" target="_blank">
-                            <div>Facebook - Claudius Iacoș</div>
-                        </a>
-                    </li>
-                    <li> 
-                        <a href="https://www.facebook.com/profile.php?id=100063605379786" target="_blank">
-                            <div>Facebook - Amanet Deva Cleopatra Gold </div>
-                        </a>
-                    </li>
-                    <li> 
-                        <a href="https://www.facebook.com/profile.php?id=100064164159435" target="_blank">
-                            <div>Facebook - Claudius Gold Coins & Amanet </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        }
-        @if (screenWidth > 1300) {
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <ul>
-                    <li> 
-                        <a href="https://shorturl.at/8pbgv" target="_blank">
-                            <div>Str. 22 Decembrie, Bl. 4, Sc. D, Parter</div> 
-                            <div>Deva, 330037 Romania</div>
-                        </a>
-                    </li>
-                    <li> 
-                        <a href="tel:+40768691703">
-                            <div>+40 768 691 703</div>
-                        </a>
-                    </li>
-                    <li> 
-                        <a href="mailto:claudiusgoldcoins@yahoo.com">
-                            <div>claudiusgoldcoins&#64;yahoo.com</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        }
+    <footer class="footer">
+        <div class="footer-container">
+            @if (screenWidth > 800) {
+                <div class="footer-section logo-section">
+                    <img src="assets/logo.png" alt="Claudius Gold Coins Logo" class="logo">
+                    <h1 class="site-title">Claudius Gold Coins</h1>
+                    <h2 class="quote">"Nu dați banii pe prostii, investiți  pentru copii"</h2>
+                </div>    
+            }
+          
+            @if (screenWidth >550) {
+                <div class="footer-section">
+                    <h3>Meniu</h3>
+                    <ul>
+                        @for (menuItem of menuItems; track $index) {
+                            <li class="menu-item">
+                                @if (menuItem.isInternal) {
+                                <a [routerLink]="menuItem.link" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="menu-link">
+                                    {{menuItem.name}}  
+                                </a>
+                                }@else {
+                                    <a class="menu-link" [href]="menuItem.link"  target="_blank"> {{menuItem.name}} </a>
+                                }
+                            </li>
+                            }
+                    </ul>
+                </div>
+            }
     
-        <div class="footer-section">
-            <h3>Politici</h3>
-            <ul>
-                <li><a href="/terms-and-conditions">Termeni & Condiții</a></li>
-                <li><a href="/privacy-policy">Politica de Confidențialitate</a></li>
-                <li><a href="https://anpc.ro/" target="_blank">ANPC</a></li>
-                <li><a href="https://www.dataprotection.ro/" target="_blank">ANSPDCP</a></li>
-                <li><a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO" target="_blank">ODR</a></li>
-            </ul>
+            @if (screenWidth > 1300) {
+                <div class="footer-section">
+                    <h3>Social media</h3>
+                    <ul>
+                        <li> 
+                            <a href="https://www.facebook.com/profile.php?id=100012720152590" target="_blank">
+                                <div>Facebook - Claudius Iacoș</div>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="https://www.facebook.com/profile.php?id=100063605379786" target="_blank">
+                                <div>Facebook - Amanet Deva Cleopatra Gold </div>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="https://www.facebook.com/profile.php?id=100064164159435" target="_blank">
+                                <div>Facebook - Claudius Gold Coins & Amanet </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            @if (screenWidth > 1300) {
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li> 
+                            <a href="https://shorturl.at/8pbgv" target="_blank">
+                                <div>Str. 22 Decembrie, Bl. 4, Sc. D, Parter</div> 
+                                <div>Deva, 330037 Romania</div>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="tel:+40768691703">
+                                <div>+40 768 691 703</div>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="mailto:claudiusgoldcoins@yahoo.com">
+                                <div>claudiusgoldcoins&#64;yahoo.com</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+        
+            <div class="footer-section">
+                <h3>Politici</h3>
+                <ul>
+                    <li><a href="/terms-and-conditions">Termeni & Condiții</a></li>
+                    <li><a href="/privacy-policy">Politica de Confidențialitate</a></li>
+                    <li><a href="https://anpc.ro/" target="_blank">ANPC</a></li>
+                    <li><a href="https://www.dataprotection.ro/" target="_blank">ANSPDCP</a></li>
+                    <li><a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO" target="_blank">ODR</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="footer-trademark">
-        © 2025  CLAUDIUS GOLD COINS
-    </div>
-</footer>
-  
+        <div class="footer-trademark">
+            © 2025  CLAUDIUS GOLD COINS
+        </div>
+    </footer>    
+}

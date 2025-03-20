@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { HamburgerMenuComponent } from './hamburger-menu/hamburger-menu.component';
 import { UserActionsHeaderComponent } from "./user-actions-header/user-actions-header.component";
 import { CommonModule } from '@angular/common';
+import { DONT_DISPLAY_HEADER_PAGES } from '../../data/Constants/RoutesToDisplayComponenets';
 @Component({
   selector: 'app-header',
   imports: [RouterModule, HamburgerMenuComponent, UserActionsHeaderComponent,CommonModule],
@@ -27,7 +28,7 @@ export class HeaderComponent {
       this.screenWidth = width;
     }));
     this.subscriptions.push(this.router.events.subscribe(() => {
-      this.display = this.router.url !== '/login'; 
+      this.display = !DONT_DISPLAY_HEADER_PAGES.includes(this.router.url); 
     }));
   }
 

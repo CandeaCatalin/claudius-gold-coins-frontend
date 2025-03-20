@@ -9,6 +9,9 @@ import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { AmanetComponent } from './pages/amanet/amanet.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { EventsComponent } from './pages/events/events.component';
+import { CreateEventComponent } from './pages/events/create-event/create-event.component';
+import { NgxEditorModule } from 'ngx-editor';
 
 const title = 'Claudius Gold Coins SRL';
 
@@ -53,13 +56,71 @@ export const routes: Routes = [
     path: 'category/:category',
     component: ProductsComponent,
     data: { title: 'Products | ' + title },
+  }, 
+  {
+    path: 'events',
+    component: EventsComponent,
+    data: { title: 'Events | ' + title },
+  },
+  {
+    path: 'create-events',
+    component: CreateEventComponent,
+    data: { title: 'Create Events | ' + title },
   },
   // { path: 'products/:id', component: ProductDetailsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // Handle unknown routes
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+    NgxEditorModule.forRoot({
+      locals: {
+        // menu
+        bold: 'Bold',
+        italic: 'Italic',
+        code: 'Code',
+        underline: 'Underline',
+        strike: 'Strike',
+        blockquote: 'Blockquote',
+        bullet_list: 'Bullet List',
+        ordered_list: 'Ordered List',
+        heading: 'Heading',
+        h1: 'Header 1',
+        h2: 'Header 2',
+        h3: 'Header 3',
+        h4: 'Header 4',
+        h5: 'Header 5',
+        h6: 'Header 6',
+        align_left: 'Left Align',
+        align_center: 'Center Align',
+        align_right: 'Right Align',
+        align_justify: 'Justify',
+        text_color: 'Text Color',
+        background_color: 'Background Color',
+        horizontal_rule: 'Horizontal rule',
+        format_clear: 'Clear Formatting',
+        insertLink: 'Insert Link',
+        removeLink: 'Remove Link',
+        insertImage: 'Insert Image',
+        indent: 'Increase Indent',
+        outdent: 'Decrease Indent',
+        superscript: 'Superscript',
+        subscript: 'Subscript',
+        undo: 'Undo',
+        redo: 'Redo',
+    
+        // pupups, forms, others...
+        url: 'URL',
+        text: 'Text',
+        openInNewTab: 'Open in new tab',
+        insert: 'Insert',
+        altText: 'Alt Text',
+        title: 'Title',
+        remove: 'Remove',
+        enterValidUrl: 'Please enter a valid URL',
+      },
+    })
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 300px;
+  width: 350px;
   height: 100%;
   background: rgb(233, 233,233);
   color: white;
@@ -23,9 +23,15 @@
   right: 15px;
   background: none;
   border: none;
+  padding: 5px;
   font-size: 24px;
   color: black;
+  width: 50px;
+  margin-bottom: 10px;
   cursor: pointer;
+  display: flex; /* Ensures the content is included in the clickable area */
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar {
@@ -55,7 +61,7 @@
         display: none;
         position: absolute;
         top: 0%; // Ensures it appears directly below the menu item
-        left: 40%;
+        left: 20%;
         background: #444;
         list-style: none;
         padding: 5px;

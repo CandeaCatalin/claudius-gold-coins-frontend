@@ -1,21 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SortModel } from '../../shared/models/SortModel';
+import { Subscription } from 'rxjs';
+import { WindowRefService } from '../../shared/services/window-ref.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-products',
-  imports: [RouterModule,FormsModule],
+  imports: [RouterModule,FormsModule, CommonModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit, OnDestroy {
   category: string = '';
   title: string = '';
   content: string = '';
   searchQuery: string = '';
   
+    public screenWidth: number = 0;
+  
+    private subscriptions: Subscription[] = [];
+
   sortOptions : SortModel[] = [
     { value: 'recomanded',type:'asc', label: 'Recomandat' },
     { value: 'date',type:'asc', label: 'Cele mai noi' },
@@ -27,8 +34,17 @@ export class ProductsComponent {
   
   selectedSort: SortModel | undefined = this.sortOptions[0];
   
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private windowRefService: WindowRefService) {}
+  
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();  
+    });
+  }
   ngOnInit(): void {
+    this.subscriptions.push(this.windowRefService.screenWidth$.subscribe(width => {
+      this.screenWidth = width;
+    }));
     this.route.paramMap.subscribe(params => {
       this.category = params?.get('category') || '';
       this.title = this.category
