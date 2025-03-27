@@ -6,4 +6,6 @@ export const DONT_DISPLAY_HEADER_PAGES: string[] =[
 export const DONT_DISPLAY_FOOTER_PAGES: string[] =[
     "/login",
     "/register",
+    "/create-event",
+    "/create-product"
 ];    

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NavigateService } from '../../../services/navigate.service';
 
 @Component({
   selector: 'app-user-actions-header',
@@ -9,4 +10,10 @@ import { RouterModule } from '@angular/router';
 })
 export class UserActionsHeaderComponent {
   cartCount = 10;
+
+  constructor(private navigateService: NavigateService ) {}
+
+  navigateAndRefresh() {
+    this.navigateService.navigateAndRefresh("login");
+  }
 }

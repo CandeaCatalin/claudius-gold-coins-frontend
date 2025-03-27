@@ -1,33 +1,36 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
+import { Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CAPTCHA_KEY, GOOGLE_CLIENT_ID } from '../../data/Constants/Constants';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { NavigateService } from '../../services/navigate.service';
 
 declare const google: any;
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   imports: [RouterModule,CommonModule, ReactiveFormsModule, RecaptchaModule, RecaptchaFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+export class RegisterComponent {
+  registerForm: FormGroup;
   captchaKey: string = CAPTCHA_KEY;
   showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   ngOnInit(): void {
     this.initializeGoogleSignIn();
   }
   constructor(private fb: FormBuilder, private ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: Object, private navigateService: NavigateService) {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6),this.passwordValidator]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6),this.passwordValidator]],
       recaptcha: ['', Validators.required]
+    },{
+      validators:this.passwordMatchValidator("password","confirmPassword")
     });
   }
 
@@ -39,10 +42,11 @@ export class LoginComponent implements OnInit {
         });
 
         google.accounts.id.renderButton(
-          document.getElementById("google-signin-button") as HTMLElement,
+          document.getElementById("google-signup-button") as HTMLElement,
           {
             theme: 'outline', size: 'large',
             type: 'standard',
+            text: "signup_with"
           }  // customization attributes
         );
       }
@@ -61,13 +65,28 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
+    if (this.registerForm.valid) {
       // this.authService.setToken(this.loginForm.value.email);
-      console.log('Form Submitted', this.loginForm.value);
+      console.log('Form Submitted', this.registerForm.value);
       this.navigateService.navigate("");
     }
   }
   
+  passwordMatchValidator(password: string, confirmPassword: string): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const pass = formGroup.get(password)?.value;
+      const confirmPass = formGroup.get(confirmPassword)?.value;
+  
+      if (pass !== confirmPass) {
+        formGroup.get(confirmPassword)?.setErrors({ passwordMismatch: true });
+        return { passwordMismatch: true };
+      } else {
+        formGroup.get(confirmPassword)?.setErrors(null);
+        return null;
+      }
+    };
+  }
+
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (!value) return null;
@@ -92,15 +111,19 @@ export class LoginComponent implements OnInit {
 
   }
 
+  navigateAndRefresh() {
+    this.navigateService.navigateAndRefresh("login");
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+  
   goBack(): void {
     this.navigateService.navigate("");
-  }
-
-  navigateAndRefresh() {
-    this.navigateService.navigateAndRefresh("register");
   }
 }

@@ -1,17 +1,29 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Editor, NgxEditorModule, Toolbar, Validators } from 'ngx-editor';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import {  FormBuilder, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
+import { Editor, NgxEditorModule, Toolbar } from 'ngx-editor';
 @Component({
   selector: 'app-create-event',
-  imports: [NgxEditorModule, ReactiveFormsModule],
+  imports: [NgxEditorModule, ReactiveFormsModule,CommonModule],
   templateUrl: './create-event.component.html',
   styleUrl: './create-event.component.scss'
 })
-export class CreateEventComponent implements OnInit, OnDestroy {
+export class CreateEventComponent implements AfterViewInit , OnDestroy {
+  
+  form: FormGroup;
+  imagePreview: string | ArrayBuffer | null = null;
+  
+  constructor(private fb: FormBuilder){
+    this.form = this.fb.group({
+      image: [null,[Validators.required]],
+      title:['',[Validators.required]],
+      editorContent: ['', [Validators.required]],
+    });
+  }
+  ngAfterViewInit(): void {
+    this.editor = new Editor();
+  }
 
-  form = new FormGroup({
-    editorContent: new FormControl('', Validators.required()),
-  });
   editor = new Editor();
   
   toolbar: Toolbar = [
@@ -29,10 +41,6 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     ['undo', 'redo'],
   ];
 
-  ngOnInit(): void {
-    this.editor = new Editor();
-  }
-
   ngOnDestroy(): void {
     this.editor?.destroy();
   }
@@ -45,6 +53,28 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     }
     else{
       return "";
+    }
+  }
+  
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length) {
+      const file = input.files[0];
+
+      // Store the file in FormGroup
+      this.form.patchValue({ image: file });
+
+      // Convert image to Base64 for preview
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+    }
+  }
+  onSubmit() {
+    if (this.form.valid) {
+      console.log('Form Submitted', this.form.value);
     }
   }
 }

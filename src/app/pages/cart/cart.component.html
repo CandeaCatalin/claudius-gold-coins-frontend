@@ -1,1 +1,27 @@
-<p>cart works!</p>
+<div class="container mt-4">
+    <h3>{{title}}</h3>
+  
+    <input type="text" class="form-control mb-2" placeholder="Search..." (input)="applyFilter($event)">
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th (click)="sortData('product.name')">Nume produs</th>
+          <th (click)="sortData('product.category')">Categorie</th>
+          <th (click)="sortData('product.price')">Preț(euro)</th>
+          <th (click)="sortData('status')">Status</th>
+          <th (click)="sortData('address')">Adresă</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of allOrders">
+          <td>{{ order.product.name }}</td>
+          <td>{{ order.product.category }}</td>
+          <td>{{ order.finalPrice }}</td>
+          <td>{{ order.address }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="submit-button" (click)="onSubmit()">Plasează comandă</button>
+  </div>
+  

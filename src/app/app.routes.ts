@@ -8,10 +8,12 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { AmanetComponent } from './pages/amanet/amanet.component';
-import { ProductsComponent } from './pages/products/products.component';
 import { EventsComponent } from './pages/events/events.component';
 import { CreateEventComponent } from './pages/events/create-event/create-event.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { RegisterComponent } from './pages/register/register.component';
+import { CreateProductComponent } from './pages/products/create-product/create-product.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 
 const title = 'Claudius Gold Coins SRL';
 
@@ -26,6 +28,11 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     data: { title: 'Login  | ' + title },
+  },
+   {
+    path: 'register',
+    component: RegisterComponent,
+    data: { title: 'Register  | ' + title },
   },
   {
     path: 'cart',
@@ -54,8 +61,8 @@ export const routes: Routes = [
   },
   {
     path: 'category/:category',
-    component: ProductsComponent,
-    data: { title: 'Products | ' + title },
+    loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent),
+    data: { renderMode: 'prerender' }
   }, 
   {
     path: 'events',
@@ -63,12 +70,21 @@ export const routes: Routes = [
     data: { title: 'Events | ' + title },
   },
   {
-    path: 'create-events',
+    path: 'create-event',
     component: CreateEventComponent,
-    data: { title: 'Create Events | ' + title },
+    data: { title: 'Adaugă eveniment | ' + title },
+  }, 
+  {
+    path: 'create-product',
+    component: CreateProductComponent,
+    data: { title: 'Adaugă produs | ' + title },
   },
-  // { path: 'products/:id', component: ProductDetailsComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' }, // Handle unknown routes
+   {
+    path: 'orders',
+    component: OrdersComponent,
+    data: { title: 'Comenzi | ' + title },
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -21,7 +21,7 @@ export const PRODUCTS_CATEGORIES: MenuItemModel[]=[
   
   {
     id: '6',
-    link: '/category/monede-Cupru',
+    link: '/category/monede-cupru',
     name: 'Monede CUPRU',
     imagePath: 'assets/categories/monede_cupru.png',
     orderIndex: 4,

@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { OrderModel } from '../../shared/models/OrderModel';
+import { CommonModule } from '@angular/common';
 import { ProductModel } from '../../shared/models/ProductModel';
 import { UserModel } from '../../shared/models/UserModel';
 
@@ -9,22 +9,55 @@ const ORDERS: OrderModel[] = [
 ];
 
 @Component({
-  selector: 'app-cart',
+  selector: 'app-orders',
   imports: [CommonModule],
-  templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+  templateUrl: './orders.component.html',
+  styleUrl: './orders.component.scss'
 })
-export class CartComponent {
+export class OrdersComponent {
 
   title= "Comenzile mele";
   allOrders: OrderModel[] = ORDERS;
+  filteredOrders: OrderModel[] = ORDERS;
+  paginatedOrders: OrderModel[] = [];
+
+  currentPage: number = 1;
+  pageSize: number = 1;
+  totalPages: number = 2;
+  totalPagesArray: number[] = [];
 
   ngOnInit() {
+    this.updatePagination();
+  }
+
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredOrders.length / this.pageSize);
+    this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    this.paginatedOrders = this.filteredOrders.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updatePagination();
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
   }
 
   applyFilter(event: any) {
     const filterValue = event.target.value.toLowerCase();
-    this.allOrders = this.allOrders.filter(order => 
+    this.filteredOrders = this.allOrders.filter(order => 
       order.id.toLowerCase().includes(filterValue) || 
       order.user.name.toLowerCase().includes(filterValue) ||
       order.product.name.toLowerCase().includes(filterValue) ||
@@ -32,10 +65,13 @@ export class CartComponent {
       order.status.toLowerCase().includes(filterValue) ||
       order.address.toLowerCase().includes(filterValue)
     );
+    this.currentPage = 1; // Reset to first page after filtering
+    this.updatePagination();
   }
 
   sortData(column: keyof OrderModel | 'product.name' | 'product.category' | 'product.price' | 'user.name') {
-    this.allOrders = [...this.allOrders].sort((a, b) => {
+    console.log(column);
+    this.filteredOrders = [...this.filteredOrders].sort((a, b) => {
       let aValue: any;
       let bValue: any;
       if(column.startsWith('product.')){
@@ -51,9 +87,7 @@ export class CartComponent {
      
       return aValue.toString().localeCompare(bValue.toString(), undefined, { numeric: true });
     });
-  }
-
-  onSubmit(){
-    console.log("submited");
+  
+    this.updatePagination();
   }
 }
