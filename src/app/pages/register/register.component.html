@@ -1,12 +1,24 @@
 <script src="https://accounts.google.com/gsi/client" async></script>
-<button (click)="goBack()" class="back-button">&#8592; Back</button>
-<div class="content">
-  <div class="title">înregistrează-te</div>
-  <div class="login-container">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<button
+  (click)="goBack()"
+  class="back-button"
+  aria-label="Go back to the previous page"
+>
+  &#8592; Back
+</button>
+<div class="content" role="main">
+  <div class="title" aria-label="Register">înregistrează-te</div>
+  <div class="login-container" aria-labelledby="register-form">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" id="register-form">
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" formControlName="email" class="form-input" />
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-input"
+          aria-required="true"
+        />
         <div
           *ngIf="
             registerForm.get('email')?.invalid &&
@@ -24,17 +36,20 @@
       </div>
 
       <div class="form-group">
-        <label>Parolă</label>
+        <label for="password">Parolă</label>
         <div class="password-wrapper">
           <input
+            id="password"
             [type]="showPassword ? 'text' : 'password'"
             formControlName="password"
             class="form-input"
+            aria-required="true"
           />
           <button
             type="button"
             class="eye-btn"
             (click)="togglePasswordVisibility()"
+            aria-label="Toggle password visibility"
           >
             <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
           </button>
@@ -55,17 +70,20 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Confirmă Parola</label>
+        <label for="confirmPassword">Confirmă Parola</label>
         <div class="password-wrapper">
           <input
+            id="confirmPassword"
             [type]="showConfirmPassword ? 'text' : 'password'"
             formControlName="confirmPassword"
             class="form-input"
+            aria-required="true"
           />
           <button
             type="button"
             class="eye-btn"
             (click)="toggleConfirmPasswordVisibility()"
+            aria-label="Toggle confirm password visibility"
           >
             <i
               [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"
@@ -95,6 +113,7 @@
         <re-captcha
           formControlName="recaptcha"
           [siteKey]="captchaKey"
+          aria-label="Recaptcha verification"
         ></re-captcha>
         <div
           *ngIf="
@@ -107,22 +126,28 @@
         </div>
       </div>
 
-      <button type="submit" class="login" [disabled]="registerForm.invalid">
+      <button
+        type="submit"
+        class="login"
+        [disabled]="registerForm.invalid"
+        aria-label="Submit registration form"
+      >
         Înregistrează-te
       </button>
     </form>
 
-    Ai deja cont?
+    <p>Ai deja cont?</p>
     <a
       routerLink="/register"
       routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }"
       class="register-link"
       (click)="navigateAndRefresh()"
+      aria-label="Navigate to login page"
     >
       Conectează-te
     </a>
   </div>
-  <div class="horisontal-lines">sau</div>
-  <div id="google-signup-button"></div>
+  <div class="horisontal-lines" aria-hidden="true">sau</div>
+  <div id="google-signup-button" aria-label="Google signup button"></div>
 </div>

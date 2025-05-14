@@ -42,7 +42,7 @@
               router.isActive(menuItem.link, true) ? 'page' : null
             "
             role="menuitem"
-            tabindex="0"
+            [attr.tabindex]="menuItem.orderIndex"
           >
             {{ menuItem.name }}
           </a>
@@ -53,7 +53,7 @@
             target="_blank"
             rel="noopener noreferrer"
             role="menuitem"
-            tabindex="0"
+            [attr.tabindex]="menuItem.orderIndex"
           >
             {{ menuItem.name }}
           </a>

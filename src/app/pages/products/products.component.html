@@ -1,34 +1,40 @@
 @if(isAdmin()){
-<button class="add-button" (click)="navigateToAddProduct()">
+<button
+  class="add-button"
+  (click)="navigateToAddProduct()"
+  aria-label="Add a new product"
+>
   Adaugă produs
 </button>
 }
-<div class="page">
-  <div class="path-display">
+<div class="page" role="main">
+  <div class="path-display" aria-label="Breadcrumb navigation">
     <a
       routerLink="/"
       routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }"
+      aria-label="Go to homepage"
     >
       Start
     </a>
-    <span> > </span>
+    <span aria-hidden="true"> > </span>
     <span>
       {{ title }}
     </span>
   </div>
   <div class="container-header">
-    <p class="title left-header">
+    <p class="title left-header" aria-label="Page title">
       {{ title }}
     </p>
     <div class="right-header">
-      <div class="search-container">
+      <div class="search-container" aria-label="Search products">
         <svg
           class="search-icon"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           stroke="currentColor"
           fill="none"
+          aria-hidden="true"
         >
           <path
             stroke-linecap="round"
@@ -43,14 +49,16 @@
           class="search-input"
           [(ngModel)]="searchQuery"
           (input)="onSearchChange()"
+          aria-label="Search input"
         />
       </div>
-      <div class="sort-dropdown">
+      <div class="sort-dropdown" aria-label="Sort products">
         <label for="sort">Sortează după:</label>
         <select
           id="sort"
           [(ngModel)]="selectedSort"
           (change)="onSortChange($event)"
+          aria-label="Sort options"
         >
           <option *ngFor="let option of sortOptions" [ngValue]="option">
             {{ option.label }}
@@ -60,13 +68,14 @@
     </div>
   </div>
   <div class="container">
-    <div class="left">
+    <div class="left" aria-label="Product categories">
       @for (category of product_categories; track $index) {
       <a
         [routerLink]="category.link"
         routerLinkActive="active-link"
         [routerLinkActiveOptions]="{ exact: true }"
         class="category-item"
+        [attr.aria-label]="'Category: ' + category.name"
       >
         <div class="category-text">
           {{ category.name }}
@@ -76,9 +85,9 @@
     </div>
     <div class="right">
       @if(isLoading){
-      <app-loading-spinner></app-loading-spinner>
+      <app-loading-spinner aria-label="Loading products"></app-loading-spinner>
       }@else{
-      <div class="product-list">
+      <div class="product-list" aria-label="Product list">
         <div class="product-grid">
           @for (product of currentProducts; track $index) {
           <div>
@@ -86,6 +95,7 @@
             <div
               (click)="navigateToProductDetails(product)"
               class="product-card"
+              [attr.aria-label]="'View details for ' + product.name"
             >
               <img
                 [src]="product.mainImage"
@@ -107,11 +117,12 @@
         </div>
 
         <!-- Pagination -->
-        <div class="pagination">
+        <div class="pagination" aria-label="Pagination controls">
           <button
             class="pagination-btn"
             (click)="goToPreviousPage()"
             [disabled]="currentPage === 1"
+            aria-label="Go to previous page"
           >
             Previous
           </button>
@@ -124,6 +135,7 @@
             class="pagination-btn"
             (click)="goToNextPage()"
             [disabled]="currentPage === totalPages"
+            aria-label="Go to next page"
           >
             Next
           </button>

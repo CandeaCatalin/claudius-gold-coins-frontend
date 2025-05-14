@@ -24,6 +24,7 @@ div h3 {
 div p {
   margin-bottom: 5vh;
   margin-top: 5vh;
+  line-height: 1.6; /* Improved readability */
 }
 
 hr {
@@ -35,6 +36,7 @@ hr {
 
 .container {
   display: flex;
+  flex-wrap: wrap; /* Ensures responsiveness */
   width: 100%;
   margin-bottom: 30px;
 }
@@ -44,4 +46,6 @@ hr {
   height: 150px;
   margin: 20px;
   object-fit: cover;
+  border-radius: 8px; /* Adds a modern touch */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better visuals */
 }

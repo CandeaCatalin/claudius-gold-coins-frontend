@@ -2,7 +2,7 @@
 <header class="header" role="banner">
   <div class="top-bar">
     <!-- Left Side: Logo & Shop Title -->
-    <div [ngClass]="screenWidth > 1280 ? 'left logo-title' : 'left'">
+    <div [ngClass]="screenWidth > 1480 ? 'left logo-title' : 'left'">
       <a routerLink="/" class="logo-link" aria-label="Go to homepage">
         <img
           src="assets/logo.png"
@@ -26,7 +26,7 @@
             [routerLinkActiveOptions]="{ exact: true }"
             class="menu-link"
             role="menuitem"
-            tabindex="0"
+            [attr.tabindex]="menuItem.orderIndex"
             [attr.aria-haspopup]="menuItem.childs.length > 0 ? 'true' : null"
             [attr.aria-expanded]="menuItem.childs.length > 0 ? 'false' : null"
           >
@@ -40,7 +40,7 @@
                 class="dropdown-item"
                 [routerLink]="menuChild.link"
                 role="menuitem"
-                tabindex="0"
+                [attr.tabindex]="menuChild.orderIndex"
               >
                 {{ menuChild.name }}
               </a>
@@ -54,7 +54,7 @@
             target="_blank"
             rel="noopener"
             role="menuitem"
-            tabindex="0"
+            [attr.tabindex]="menuItem.orderIndex"
           >
             {{ menuItem.name }}
           </a>

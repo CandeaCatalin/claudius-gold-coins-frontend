@@ -1,52 +1,92 @@
 @if(this.isLoading == false){ @if(isAdmin()){
 <div>
-  <button class="admin-button delete-button" (click)="deleteProduct()">
+  <button
+    class="admin-button delete-button"
+    (click)="deleteProduct()"
+    aria-label="Delete product"
+  >
     Șterge
   </button>
-  <button class="admin-button" (click)="markAsSold()">Setează ca vândut</button>
+  <button
+    class="admin-button"
+    (click)="markAsSold()"
+    aria-label="Mark product as sold"
+  >
+    Setează ca vândut
+  </button>
 </div>
 }
 
-<div class="back-button" (click)="goBack()"><span> < </span>Inapoi</div>
+<div
+  class="back-button"
+  (click)="goBack()"
+  aria-label="Go back to product list"
+>
+  <span> < </span>Inapoi
+</div>
 <div class="product-details">
   <div class="images-container">
     <div class="main-image">
       <img
         [src]="product!.images[selectedImageIndex]"
-        alt="Main Product Image"
+        [alt]="'Main image of ' + product?.name"
         (mousemove)="zoom($event)"
         (mouseleave)="resetZoom($event)"
-      />>
+      />
     </div>
 
-    <div class="thumbnail-carousel">
-      <button class="arrow left-arrow" (click)="prevImage()">&#10094;</button>
+    <div class="thumbnail-carousel" aria-label="Product image thumbnails">
+      <button
+        class="arrow left-arrow"
+        (click)="prevImage()"
+        aria-label="Previous image"
+      >
+        &#10094;
+      </button>
 
       <div class="thumbnails">
         <img
           *ngFor="let image of product!.images; let i = index"
           [src]="image"
-          alt="Product Thumbnail"
+          [alt]="'Thumbnail ' + (i + 1) + ' of ' + product?.name"
           [class.selected]="i === selectedImageIndex"
           (click)="setSelectedImage(i)"
         />
       </div>
 
-      <button class="arrow right-arrow" (click)="nextImage()">&#10095;</button>
+      <button
+        class="arrow right-arrow"
+        (click)="nextImage()"
+        aria-label="Next image"
+      >
+        &#10095;
+      </button>
     </div>
   </div>
 
   <div class="product-info">
-    <h1 class="product-name">{{ product?.name }}</h1>
-    <div class="product-description" [innerHTML]="product?.content"></div>
+    <h1 class="product-name" aria-label="Product name">{{ product?.name }}</h1>
+    <div
+      class="product-description"
+      [innerHTML]="product?.content"
+      aria-label="Product description"
+    ></div>
     @if(product?.status !== "sold"){
-    <p class="product-price">${{ product?.totalPrice }}</p>
-    <button class="add-to-cart" (click)="addToCart()">Adaugă în coș</button>
+    <p class="product-price" aria-label="Product price">
+      ${{ product?.totalPrice }}
+    </p>
+    <button
+      class="add-to-cart"
+      (click)="addToCart()"
+      aria-label="Add product to cart"
+    >
+      Adaugă în coș
+    </button>
     }@else {
-    <p class="sold">SOLD</p>
+    <p class="sold" aria-label="Product is sold">SOLD</p>
     }
   </div>
 </div>
 }@else{
-<app-loading-spinner></app-loading-spinner>
+<app-loading-spinner aria-label="Loading product details"></app-loading-spinner>
 }

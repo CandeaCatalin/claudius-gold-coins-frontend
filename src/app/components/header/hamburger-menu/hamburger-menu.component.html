@@ -1,8 +1,15 @@
-<nav class="navbar navbar">
-  <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
-    <span class="navbar-toggler-icon"></span>
+<nav class="navbar" aria-label="Mobile navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    aria-label="Open menu"
+    aria-controls="mobile-sidebar"
+    [attr.aria-expanded]="isSidebarOpen ? 'true' : 'false'"
+    (click)="toggleSidebar()"
+  >
+    <span class="navbar-toggler-icon" aria-hidden="true"></span>
   </button>
 </nav>
 @if (isSidebarOpen) {
-<app-sidebar (closeSidebar)="toggleSidebar()"></app-sidebar>
+<app-sidebar id="mobile-sidebar" (closeSidebar)="toggleSidebar()"></app-sidebar>
 }

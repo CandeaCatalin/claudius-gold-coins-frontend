@@ -1,17 +1,35 @@
 <script src="https://accounts.google.com/gsi/client" async></script>
-<button (click)="goBack()" class="back-button">&#8592; Back</button>
-<div class="content">
-  <div class="title">Conectează-te</div>
+<button
+  (click)="goBack()"
+  class="back-button"
+  aria-label="Înapoi la pagina anterioară"
+>
+  &#8592; Back
+</button>
+<div class="content" role="main" aria-labelledby="login-title">
+  <h1 id="login-title" class="title">Conectează-te</h1>
   <div class="login-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      aria-label="Formular de autentificare"
+    >
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" formControlName="email" class="form-input" />
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-input"
+          aria-required="true"
+          aria-describedby="email-error"
+        />
         <div
           *ngIf="
             loginForm.get('email')?.invalid && loginForm.get('email')?.touched
           "
           class="error"
+          id="email-error"
         >
           <small *ngIf="loginForm.get('email')?.errors?.['required']"
             >Emailul este obligatoriu</small
@@ -23,17 +41,23 @@
       </div>
 
       <div class="form-group">
-        <label>Parolă</label>
+        <label for="password">Parolă</label>
         <div class="password-wrapper">
           <input
+            id="password"
             [type]="showPassword ? 'text' : 'password'"
             formControlName="password"
             class="form-input"
+            aria-required="true"
+            aria-describedby="password-error"
           />
           <button
             type="button"
             class="eye-btn"
             (click)="togglePasswordVisibility()"
+            [attr.aria-label]="
+              showPassword ? 'Ascunde parola' : 'Afișează parola'
+            "
           >
             <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
           </button>
@@ -44,6 +68,7 @@
             loginForm.get('password')?.touched
           "
           class="error"
+          id="password-error"
         >
           <small *ngIf="loginForm.get('password')?.errors?.['required']"
             >Parola este obligatorie</small
@@ -58,6 +83,7 @@
         <re-captcha
           formControlName="recaptcha"
           [siteKey]="captchaKey"
+          aria-required="true"
         ></re-captcha>
         <div
           *ngIf="
@@ -69,22 +95,28 @@
           <small>Recaptcha is required.</small>
         </div>
       </div>
-      <button type="submit" class="login" [disabled]="loginForm.invalid">
+      <button
+        type="submit"
+        class="login"
+        [disabled]="loginForm.invalid"
+        [attr.aria-disabled]="loginForm.invalid"
+      >
         Conectează-te
       </button>
     </form>
 
-    Nu ai cont?
+    <p>Nu ai cont?</p>
     <a
       routerLink="/register"
       routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }"
       class="register-link"
       (click)="navigateAndRefresh()"
+      aria-label="Înregistrează-te pentru a crea un cont nou"
     >
       Înregistrează-te
     </a>
   </div>
-  <div class="horisontal-lines">sau</div>
-  <div id="google-signin-button"></div>
+  <div class="horisontal-lines" aria-hidden="true">sau</div>
+  <div id="google-signin-button" aria-label="Autentificare cu Google"></div>
 </div>
