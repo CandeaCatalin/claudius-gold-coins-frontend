@@ -1,0 +1,52 @@
+@if(this.isLoading == false){ @if(isAdmin()){
+<div>
+  <button class="admin-button delete-button" (click)="deleteProduct()">
+    Șterge
+  </button>
+  <button class="admin-button" (click)="markAsSold()">Setează ca vândut</button>
+</div>
+}
+
+<div class="back-button" (click)="goBack()"><span> < </span>Inapoi</div>
+<div class="product-details">
+  <div class="images-container">
+    <div class="main-image">
+      <img
+        [src]="product!.images[selectedImageIndex]"
+        alt="Main Product Image"
+        (mousemove)="zoom($event)"
+        (mouseleave)="resetZoom($event)"
+      />>
+    </div>
+
+    <div class="thumbnail-carousel">
+      <button class="arrow left-arrow" (click)="prevImage()">&#10094;</button>
+
+      <div class="thumbnails">
+        <img
+          *ngFor="let image of product!.images; let i = index"
+          [src]="image"
+          alt="Product Thumbnail"
+          [class.selected]="i === selectedImageIndex"
+          (click)="setSelectedImage(i)"
+        />
+      </div>
+
+      <button class="arrow right-arrow" (click)="nextImage()">&#10095;</button>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <h1 class="product-name">{{ product?.name }}</h1>
+    <div class="product-description" [innerHTML]="product?.content"></div>
+    @if(product?.status !== "sold"){
+    <p class="product-price">${{ product?.totalPrice }}</p>
+    <button class="add-to-cart" (click)="addToCart()">Adaugă în coș</button>
+    }@else {
+    <p class="sold">SOLD</p>
+    }
+  </div>
+</div>
+}@else{
+<app-loading-spinner></app-loading-spinner>
+}

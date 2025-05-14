@@ -1,8 +1,9 @@
-import { BaseModel } from "./BaseModel";
+import { BaseModel } from './BaseModel';
 
 export interface EventsModel extends BaseModel {
-    title?: string;
-    content?:string;
-    imagePath?:string;
-    links?:string;
+  id?: string;
+  title?: string;
+  description?: string;
+  image: string;
+  links?: string;
 }

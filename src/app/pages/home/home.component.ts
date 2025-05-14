@@ -7,9 +7,8 @@ import { RouterModule } from '@angular/router';
   selector: 'app-home',
   imports: [RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
-export class HomeComponent{
+export class HomeComponent {
   product_categories: MenuItemModel[] = PRODUCTS_CATEGORIES;
-
 }

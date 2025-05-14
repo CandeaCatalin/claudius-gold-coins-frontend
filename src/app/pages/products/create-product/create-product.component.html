@@ -2,57 +2,94 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label>Nume produs</label>
-    <input type="text" formControlName="title" class="form-input"/>
+    <input type="text" formControlName="name" class="form-input" />
   </div>
   <div class="form-group">
     <label>Preț(euro)</label>
-    <input type="number" min="0" formControlName="price" class="form-input"/>
+    <input type="number" min="0" formControlName="price" class="form-input" />
   </div>
   <div class="form-group">
     <label>Modificator preț(procent)</label>
     <div>
-        Info:
-        <br>
-        Dacă valoarea este peste 0, este discount
+      Info:
+      <br />
+      Dacă valoarea este peste 0, este discount
     </div>
     <div>
-        Daca valoarea este sub 0, pretului la afișare se adaugă un procent bazat pe prețul bursei
+      Daca valoarea este sub 0, pretului la afișare se adaugă un procent bazat
+      pe prețul bursei
     </div>
-    <input [style]="form.controls['priceModifier'].value < 0 ? 'color:red' : 'color:green'" type="number" min="-100" max="100" formControlName="priceModifier" class="form-input"/>
-</div>
-<div class="form-group">
+    <input
+      [style]="
+        form.controls['priceModifier'].value < 0 ? 'color:red' : 'color:green'
+      "
+      type="number"
+      min="-100"
+      max="100"
+      formControlName="priceModifier"
+      class="form-input"
+    />
+  </div>
+  <div class="form-group">
     <label>Categorie</label>
-<select id="categories" formControlName="category">
-    <option *ngFor="let category of categoryList" [value]="category">{{ category.displayTitle }}</option>
- </select>
+    <select id="categories" formControlName="category">
+      <option *ngFor="let category of categoryList" [value]="category.type">
+        {{ category.displayTitle }}
+      </option>
+    </select>
   </div>
   <div class="form-group">
     <label>Imagine principală</label>
-    <input type="file" (change)="onMainImageChange($event)" accept="image/*" class="form-input"/>
+    <input
+      type="file"
+      (change)="onMainImageChange($event)"
+      accept="image/*"
+      class="form-input"
+    />
     <div *ngIf="mainImagePreview">
       <img [src]="mainImagePreview" alt="Image Preview" width="200" />
     </div>
   </div>
   <div class="form-group">
     <label>Imagine secundare</label>
-    <input type="file" (change)="onImageFileChange($event)" accept="image/*" class="form-input" multiple />
+    <input
+      type="file"
+      (change)="onImageFileChange($event)"
+      accept="image/*"
+      class="form-input"
+      multiple
+    />
     <div class="image-container" *ngIf="imagePreviews.length > 0">
-        <div class="image-wrapper" *ngFor="let preview of imagePreviews; let i = index">
-          <img [src]="preview" alt="Image Preview" class="image-preview" (click)="openImage(preview)" />
-          <button type="button" class="remove-btn" (click)="removeImage(i)">❌</button>
-        </div>
+      <div
+        class="image-wrapper"
+        *ngFor="let preview of imagePreviews; let i = index"
+      >
+        <img
+          [src]="preview"
+          alt="Image Preview"
+          class="image-preview"
+          (click)="openImage(preview)"
+        />
+        <button type="button" class="remove-btn" (click)="removeImage(i)">
+          ❌
+        </button>
       </div>
+    </div>
   </div>
   <div class="form-group">
     <label>Descriere</label>
     <div class="NgxEditor__Wrapper">
-      <ngx-editor-menu [editor]="editor!" [toolbar]="toolbar"> </ngx-editor-menu>
-      <ngx-editor [editor]="editor!" formControlName="editorContent"> </ngx-editor>
+      <ngx-editor-menu [editor]="editor!" [toolbar]="toolbar">
+      </ngx-editor-menu>
+      <ngx-editor [editor]="editor!" formControlName="editorContent">
+      </ngx-editor>
     </div>
   </div>
-  <button type="submit" style="margin-bottom: 150px;" [disabled]="form.invalid">Salvează</button>
-  </form>
+  <button type="submit" style="margin-bottom: 150px" [disabled]="form.invalid">
+    Salvează
+  </button>
+</form>
 
-  <div class="modal-overlay" *ngIf="selectedImage" (click)="closeImage()">
-    <img [src]="selectedImage" alt="Full Image" class="full-image" />
-  </div>
+<div class="modal-overlay" *ngIf="selectedImage" (click)="closeImage()">
+  <img [src]="selectedImage" alt="Full Image" class="full-image" />
+</div>

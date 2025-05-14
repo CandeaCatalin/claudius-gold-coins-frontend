@@ -1,36 +1,61 @@
+import { NavigateService } from './../../../services/navigate.service';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
-import {  FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Editor, NgxEditorModule, Toolbar } from 'ngx-editor';
 import { CATEGORIES, CATEGORY_TYPE } from '../../../data/Constants/Constants';
+import { AdminService } from '../../../services/admin.service';
+import { Subscription } from 'rxjs';
+import { HttpRequestsService } from '../../../services/http-requests.service';
 
 @Component({
   selector: 'app-create-product',
-  imports: [NgxEditorModule, ReactiveFormsModule,CommonModule],
+  imports: [NgxEditorModule, ReactiveFormsModule, CommonModule],
   templateUrl: './create-product.component.html',
-  styleUrl: './create-product.component.scss'
+  styleUrl: './create-product.component.scss',
 })
-export class CreateProductComponent implements AfterViewInit , OnDestroy {
-
+export class CreateProductComponent
+  implements AfterViewInit, OnDestroy, OnInit
+{
   form: FormGroup;
   mainImagePreview: string | ArrayBuffer | null = null;
   imagePreviews: string[] = [];
   selectedImage: string | null = null;
+  subscriptions: Subscription[] = [];
   categoryList = CATEGORIES;
-  constructor(private fb: FormBuilder){
+  constructor(
+    private fb: FormBuilder,
+    private adminService: AdminService,
+    private navigateService: NavigateService,
+    private httpRequestsService: HttpRequestsService
+  ) {
     this.form = this.fb.group({
       images: this.fb.array([]),
-      category:[CATEGORIES[0], [Validators.required]],
-      mainImage: [null,[Validators.required]],
-      name:['',[Validators.required]],
+      category: ['', [Validators.required]],
+      mainImage: [null, [Validators.required]],
+      name: ['', [Validators.required]],
       editorContent: ['', [Validators.required]],
-      price:[0,[Validators.required]],
-      priceModifier:[0,[Validators.required]]
+      price: [0, [Validators.required]],
+      priceModifier: [0, [Validators.required]],
     });
   }
+
   ngAfterViewInit(): void {
     this.editor = new Editor();
   }
+
+  ngOnInit(): void {
+    if (!this.adminService.isAdmin()) {
+      this.navigateService.navigate('/events');
+    }
+  }
+
   get images(): FormArray {
     return this.form.get('images') as FormArray;
   }
@@ -38,7 +63,6 @@ export class CreateProductComponent implements AfterViewInit , OnDestroy {
   onImageFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
-
       for (let i = 0; i < input.files.length; i++) {
         const file = input.files[i];
         this.images.push(this.fb.control(file)); // Store in FormArray
@@ -54,9 +78,8 @@ export class CreateProductComponent implements AfterViewInit , OnDestroy {
   }
 
   editor = new Editor();
-  
+
   toolbar: Toolbar = [
-    // default value
     ['bold', 'italic'],
     ['underline', 'strike'],
     ['code', 'blockquote'],
@@ -73,18 +96,15 @@ export class CreateProductComponent implements AfterViewInit , OnDestroy {
   ngOnDestroy(): void {
     this.editor?.destroy();
   }
-  onClick():void{
-    console.log(this.form.controls["editorContent"].value);
-  }
-  getContent():string{
-    if(this.form.controls["editorContent"].value !=null){
-      return this.form.controls["editorContent"].value;
-    }
-    else{
-      return "";
+
+  getContent(): string {
+    if (this.form.controls['editorContent'].value != null) {
+      return this.form.controls['editorContent'].value;
+    } else {
+      return '';
     }
   }
-  
+
   onMainImageChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
@@ -107,12 +127,65 @@ export class CreateProductComponent implements AfterViewInit , OnDestroy {
     this.imagePreviews.splice(index, 1); // Remove from previews
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.valid) {
-      console.log('Form Submitted', this.form.value);
+      const file = this.form.value.mainImage;
+
+      try {
+        // Convert the image file to ArrayBuffer
+        const imageAsArrayBuffer = await file.arrayBuffer();
+
+        // Create a Uint8Array from the ArrayBuffer (each element is a byte, which is a number)
+        const imageBytes = Array.from(new Uint8Array(imageAsArrayBuffer));
+        const imagesBytes = await Promise.all(
+          this.form.value.images.map(async (image: any) => {
+            const imageAsArrayBuffer = await image.arrayBuffer();
+            return Array.from(new Uint8Array(imageAsArrayBuffer));
+          })
+        );
+
+        const body = {
+          name: this.form.value.name,
+          content: this.form.value.editorContent,
+          mainImageBytes: imageBytes,
+          imagesBytes: imagesBytes,
+          category: this.form.value.category,
+          price: this.form.value.price,
+          priceModifier: this.form.value.priceModifier,
+        };
+        // Send the request
+        this.subscriptions.push(
+          this.httpRequestsService.post('products/', body, true).subscribe({
+            next: (r) => {
+              var productId = r.id;
+              var imagesSubscriptions: Subscription[] = [];
+              imagesBytes.forEach((element) => {
+                const body = {
+                  imageBytes: element,
+                  productId: productId,
+                };
+                imagesSubscriptions.push(
+                  this.httpRequestsService
+                    .post('products/addImage', body, true)
+                    .subscribe({
+                      next: (r) => {
+                        console.log(r);
+                      },
+                      error: (err) => console.error('Add image failed', err),
+                    })
+                );
+              });
+              imagesSubscriptions.forEach((x) => x.unsubscribe);
+              this.navigateService.navigate('category/toate-produsele');
+            },
+            error: (err) => console.error('Create product failed', err),
+          })
+        );
+      } catch (error) {
+        console.error('Error processing file:', error);
+      }
     }
   }
-
   openImage(image: string) {
     this.selectedImage = image; // Set selected image
   }

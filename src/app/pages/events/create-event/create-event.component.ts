@@ -1,33 +1,54 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
-import {  FormBuilder, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Editor, NgxEditorModule, Toolbar } from 'ngx-editor';
+import { AdminService } from '../../../services/admin.service';
+import { NavigateService } from './../../../services/navigate.service';
+import { HttpRequestsService } from '../../../services/http-requests.service';
+import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-create-event',
-  imports: [NgxEditorModule, ReactiveFormsModule,CommonModule],
+  imports: [NgxEditorModule, ReactiveFormsModule, CommonModule],
   templateUrl: './create-event.component.html',
-  styleUrl: './create-event.component.scss'
+  styleUrls: ['./create-event.component.scss'],
 })
-export class CreateEventComponent implements AfterViewInit , OnDestroy {
-  
+export class CreateEventComponent implements AfterViewInit, OnDestroy, OnInit {
   form: FormGroup;
   imagePreview: string | ArrayBuffer | null = null;
-  
-  constructor(private fb: FormBuilder){
+  subscriptions: Subscription[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private adminService: AdminService,
+    private navigateService: NavigateService,
+    private httpRequestsService: HttpRequestsService
+  ) {
     this.form = this.fb.group({
-      image: [null,[Validators.required]],
-      title:['',[Validators.required]],
+      image: [null, [Validators.required]],
+      title: ['', [Validators.required]],
       editorContent: ['', [Validators.required]],
     });
   }
+
+  ngOnInit(): void {
+    if (!this.adminService.isAdmin()) {
+      this.navigateService.navigate('/events');
+    }
+  }
+
   ngAfterViewInit(): void {
     this.editor = new Editor();
   }
 
   editor = new Editor();
-  
+
   toolbar: Toolbar = [
-    // default value
     ['bold', 'italic'],
     ['underline', 'strike'],
     ['code', 'blockquote'],
@@ -43,19 +64,13 @@ export class CreateEventComponent implements AfterViewInit , OnDestroy {
 
   ngOnDestroy(): void {
     this.editor?.destroy();
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
-  onClick():void{
-    console.log(this.form.controls["editorContent"].value);
+
+  getContent(): string {
+    return this.form.controls['editorContent'].value || '';
   }
-  getContent():string{
-    if(this.form.controls["editorContent"].value !=null){
-      return this.form.controls["editorContent"].value;
-    }
-    else{
-      return "";
-    }
-  }
-  
+
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
@@ -72,9 +87,34 @@ export class CreateEventComponent implements AfterViewInit , OnDestroy {
       };
     }
   }
-  onSubmit() {
+
+  async onSubmit() {
     if (this.form.valid) {
-      console.log('Form Submitted', this.form.value);
+      const file = this.form.value.image;
+
+      try {
+        // Convert the image file to ArrayBuffer
+        const imageAsArrayBuffer = await file.arrayBuffer();
+
+        // Create a Uint8Array from the ArrayBuffer (each element is a byte, which is a number)
+        const imageBytes = Array.from(new Uint8Array(imageAsArrayBuffer));
+
+        const body = {
+          title: this.form.value.title,
+          content: this.form.value.editorContent,
+          imageBytes: imageBytes, // Send the image bytes as numbers
+        };
+
+        // Send the request
+        this.subscriptions.push(
+          this.httpRequestsService.post('events', body, true).subscribe({
+            next: () => this.navigateService.navigate('/events'),
+            error: (err) => console.error('Create event failed', err),
+          })
+        );
+      } catch (error) {
+        console.error('Error processing file:', error);
+      }
     }
   }
 }

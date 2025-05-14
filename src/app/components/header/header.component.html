@@ -1,50 +1,75 @@
 @if (display) {
-  <header class="header">
-    <div class="top-bar">
-      <!-- Left Side: Logo & Shop Title -->
-      <div [ngClass]="screenWidth > 1280? 'left logo-title': 'left'">
-        <img src="assets/logo.png" alt="Claudius Gold Coins Logo" class="logo">
-        <h1 class="site-title">Claudius Gold Coins</h1>
-      </div>
-  
-      <!-- Middle Section: Navigation Menu -->
-      
-        @if (screenWidth > 1280) {
-        <nav class="navbar">
-          <ul class="menu">
-            @for (menuItem of menuItems; track $index) {
-              <li class="menu-item">
-                @if (menuItem.isInternal) {
-                  <a [routerLink]="menuItem.link" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="menu-link">
-                    {{menuItem.name}}  
-                  </a>
-                  @if(menuItem.childs.length > 0){
-                    <ul class="dropdown-menu">
-                    @for (menuChild of menuItem.childs; track $index) {
-                      <li>
-                        <a class="dropdown-item" [routerLink]="menuChild.link">
-                          {{menuChild.name}}
-                        </a>
-                      </li>
-                    }
-                    </ul>
-                  }
-                  
-                }@else {
-                    <a class="menu-link" [href]="menuItem.link"  target="_blank"> {{menuItem.name}} </a>
-                }
-              </li>
+<header class="header" role="banner">
+  <div class="top-bar">
+    <!-- Left Side: Logo & Shop Title -->
+    <div [ngClass]="screenWidth > 1280 ? 'left logo-title' : 'left'">
+      <a routerLink="/" class="logo-link" aria-label="Go to homepage">
+        <img
+          src="assets/logo.png"
+          alt="Claudius Gold Coins logo"
+          class="logo"
+        />
+      </a>
+      <h1 class="site-title">Claudius Gold Coins</h1>
+    </div>
+
+    <!-- Middle Section: Navigation Menu -->
+    @if (screenWidth > 1280) {
+    <nav class="navbar" aria-label="Main navigation">
+      <ul class="menu" role="menubar">
+        @for (menuItem of menuItems; track $index) {
+        <li class="menu-item" role="none">
+          @if (menuItem.isInternal) {
+          <a
+            [routerLink]="menuItem.link"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="menu-link"
+            role="menuitem"
+            tabindex="0"
+            [attr.aria-haspopup]="menuItem.childs.length > 0 ? 'true' : null"
+            [attr.aria-expanded]="menuItem.childs.length > 0 ? 'false' : null"
+          >
+            {{ menuItem.name }}
+          </a>
+          @if(menuItem.childs.length > 0){
+          <ul class="dropdown-menu" role="menu">
+            @for (menuChild of menuItem.childs; track $index) {
+            <li role="none">
+              <a
+                class="dropdown-item"
+                [routerLink]="menuChild.link"
+                role="menuitem"
+                tabindex="0"
+              >
+                {{ menuChild.name }}
+              </a>
+            </li>
             }
           </ul>
-        </nav>
-        }@else {
-          <app-hamburger-menu></app-hamburger-menu>
-        }   
-        @if (screenWidth > 1280) {
-          <div class="right">
-            <app-user-actions-header></app-user-actions-header>
-          </div>
+          } }@else {
+          <a
+            class="menu-link"
+            [href]="menuItem.link"
+            target="_blank"
+            rel="noopener"
+            role="menuitem"
+            tabindex="0"
+          >
+            {{ menuItem.name }}
+          </a>
+          }
+        </li>
         }
+      </ul>
+    </nav>
+    }@else {
+    <app-hamburger-menu></app-hamburger-menu>
+    } @if (screenWidth > 1280) {
+    <div class="right">
+      <app-user-actions-header></app-user-actions-header>
     </div>
-  </header>  
+    }
+  </div>
+</header>
 }

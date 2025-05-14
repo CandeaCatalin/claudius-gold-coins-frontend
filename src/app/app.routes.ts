@@ -14,6 +14,8 @@ import { NgxEditorModule } from 'ngx-editor';
 import { RegisterComponent } from './pages/register/register.component';
 import { CreateProductComponent } from './pages/products/create-product/create-product.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { CommonModule } from '@angular/common';
+import { ProductDetailsComponent } from './pages/products/productDetails/product-details.component';
 
 const title = 'Claudius Gold Coins SRL';
 
@@ -29,7 +31,7 @@ export const routes: Routes = [
     component: LoginComponent,
     data: { title: 'Login  | ' + title },
   },
-   {
+  {
     path: 'register',
     component: RegisterComponent,
     data: { title: 'Register  | ' + title },
@@ -61,9 +63,15 @@ export const routes: Routes = [
   },
   {
     path: 'category/:category',
-    loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent),
-    data: { renderMode: 'prerender' }
-  }, 
+    loadComponent: () =>
+      import('./pages/products/products.component').then(
+        (m) => m.ProductsComponent
+      ),
+    data: {
+      renderMode: 'prerender',
+      title: 'Claudius Gold Coins & Amanet  | ' + title,
+    },
+  },
   {
     path: 'events',
     component: EventsComponent,
@@ -73,22 +81,29 @@ export const routes: Routes = [
     path: 'create-event',
     component: CreateEventComponent,
     data: { title: 'Adaugă eveniment | ' + title },
-  }, 
+  },
   {
     path: 'create-product',
     component: CreateProductComponent,
     data: { title: 'Adaugă produs | ' + title },
   },
-   {
+  {
     path: 'orders',
     component: OrdersComponent,
     data: { title: 'Comenzi | ' + title },
+  },
+  {
+    path: ':category/:name',
+    component: ProductDetailsComponent,
+    data: { title: 'Detalii produs | ' + title },
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes),
+  imports: [
+    RouterModule.forRoot(routes),
+    CommonModule,
     NgxEditorModule.forRoot({
       locals: {
         // menu
@@ -124,7 +139,7 @@ export const routes: Routes = [
         subscript: 'Subscript',
         undo: 'Undo',
         redo: 'Redo',
-    
+
         // pupups, forms, others...
         url: 'URL',
         text: 'Text',
@@ -135,7 +150,7 @@ export const routes: Routes = [
         remove: 'Remove',
         enterValidUrl: 'Please enter a valid URL',
       },
-    })
+    }),
   ],
   exports: [RouterModule],
 })

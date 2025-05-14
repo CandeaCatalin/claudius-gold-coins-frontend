@@ -4,8 +4,6 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
   selector: 'app-contact',
   imports: [],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.scss'
+  styleUrl: './contact.component.scss',
 })
-export class ContactComponent{
-
-}
+export class ContactComponent {}

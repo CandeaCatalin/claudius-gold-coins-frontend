@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SidebarComponent } from "../sidebar/sidebar.component";
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-hamburger-menu',
@@ -9,8 +9,8 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 })
 export class HamburgerMenuComponent {
   isSidebarOpen = false;
-  
+
   toggleSidebar() {
-     this.isSidebarOpen = !this.isSidebarOpen;
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }

@@ -1,53 +1,97 @@
-h1{
-    text-align: center;
-    margin-bottom: 2vh;
-    margin-top: 2vh;
+h1 {
+  text-align: center;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
 }
 
 .event-card {
-    width: 320px;
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
-    margin:5px;
+  width: 320px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  margin: 5px;
 }
 .event-card img {
-    width: 100%;
-    border-radius: 10px;
+  width: 100%;
+  border-radius: 10px;
 }
 .event-title {
-    font-size: 1rem;
-    margin: 10px 0;
-    font-weight: bold;
+  font-size: 1rem;
+  margin: 10px 0;
+  font-weight: bold;
 }
-.events-list{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f8f8;
-    font-family: Arial, sans-serif;
-    margin-bottom: 5vh;
-}
-
-.content{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-}
-.selected-event{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 800px; /* Set the specific height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 10px; /* Optional: adds padding */
-    margin-bottom:20px;
+.events-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+  font-family: Arial, sans-serif;
+  margin-bottom: 5vh;
+  width: 100%;
+  flex-wrap: wrap; /* Allow items to wrap onto new lines */
 }
 
-.selected-event img{
-    height: 300px;
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.selected-event {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 800px; /* Set the specific height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px; /* Optional: adds padding */
+  margin-bottom: 10px;
+}
+
+.selected-event img {
+  height: 300px;
+}
+
+.add-button {
+  margin: 10px;
+  text-align: center;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #218838;
+}
+
+.add-button:focus {
+  outline: none;
+}
+
+.delete-button {
+  width: 100px;
+  text-align: center;
+  padding: 10px 20px;
+  background-color: #a72828;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #882121;
+}
+
+.delete-button:focus {
+  outline: none;
 }

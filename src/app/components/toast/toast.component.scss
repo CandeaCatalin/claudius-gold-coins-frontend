@@ -1,0 +1,35 @@
+.toast {
+  min-width: 200px;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 0;
+  animation: fadeInOut 3s forwards;
+  transition: opacity 0.5s;
+}
+
+.success-toast {
+  background-color: #4caf50; /* Green */
+}
+
+.fail-toast {
+  background-color: #f44336; /* Red */
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

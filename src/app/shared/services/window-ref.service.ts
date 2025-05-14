@@ -4,7 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { throttleTime } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WindowRefService {
   private screenWidthSubject = new BehaviorSubject<number>(0);
