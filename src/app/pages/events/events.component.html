@@ -1,53 +1,33 @@
 @if(isAdmin()){
-<button
-  class="add-button"
-  (click)="navigateToAddEvent()"
-  aria-label="Add a new event"
->
+<button class="add-button" (click)="navigateToAddEvent()">
   Adaugă eveniment
 </button>
 }
-<h1 aria-label="Events">Events</h1>
+<h1>Events</h1>
 <div></div>
 <div class="content">
   @if(isLoading){
-  <app-loading-spinner aria-label="Loading events"></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
   }@else{ @if (selectedEvent != undefined) {
-  <div class="selected-event" aria-label="Selected event details">
+  <div class="selected-event">
     <div>
-      <img
-        [src]="selectedEvent.image"
-        [alt]="'Image of ' + selectedEvent.title"
-      />
+      <img [src]="selectedEvent.image" />
     </div>
-    <h1 aria-label="Event title">
+    <h1>
       {{ selectedEvent.title }}
     </h1>
-    <div
-      [innerHTML]="selectedEvent.description"
-      aria-label="Event description"
-    ></div>
+    <div [innerHTML]="selectedEvent.description"></div>
     @if(isAdmin()){
-    <button
-      class="delete-button"
-      (click)="deleteEvent()"
-      aria-label="Delete event"
-    >
-      Sterge
-    </button>
+    <button class="delete-button" (click)="deleteEvent()">Sterge</button>
     }
   </div>
   }
 
-  <div class="events-list" aria-label="List of events">
+  <div class="events-list">
     @for (item of eventsList; track $index) {
-    <div
-      class="event-card"
-      (click)="eventClicked(item)"
-      [attr.aria-label]="'Event: ' + item.title"
-    >
+    <div class="event-card" (click)="eventClicked(item)">
       <img [src]="item.image" [alt]="imageAltBuild(item, $index)" />
-      <h2 class="event-title" aria-label="Event title">{{ item.title }}</h2>
+      <h2 class="event-title">{{ item.title }}</h2>
     </div>
     }
   </div>

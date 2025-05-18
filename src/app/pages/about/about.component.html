@@ -16,15 +16,14 @@
 </div>
 <h2>EXEMPLE</h2>
 <hr />
-<div class="container" role="list" aria-label="Exemple de imagini">
+<div class="container">
   <div>
     @for (number of numbers; track $index) {
 
     <img
       class="about-image"
       src="assets/about/{{ number }}.jpg"
-      alt="Imagine despre Claudius Gold Coins numărul {{ number }}"
-      role="listitem"
+      alt="claudius-gold-coins-about-{{ number }}"
     />
 
     }

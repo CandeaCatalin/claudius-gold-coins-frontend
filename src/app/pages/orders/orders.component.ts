@@ -81,6 +81,7 @@ export class OrdersComponent {
       | 'product.price'
       | 'user.name'
   ) {
+    console.log(column);
     this.filteredOrders = [...this.filteredOrders].sort((a, b) => {
       let aValue: any;
       let bValue: any;

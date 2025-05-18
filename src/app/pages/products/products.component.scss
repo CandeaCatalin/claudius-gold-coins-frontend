@@ -19,10 +19,6 @@
   color: inherit;
 }
 
-.path-display a:hover {
-  text-decoration: underline;
-}
-
 .title {
   font-size: 55px;
   line-height: 68px;
@@ -41,31 +37,38 @@
   margin-bottom: 30px;
   max-width: 100%;
   align-items: center;
-  justify-content: space-between;
-}
-
-@media screen and (max-width: 1200px) {
-  .container-header {
+  @media screen and (max-width: 1200px) {
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
   }
+}
 
-  .left-header {
+.left-header {
+  width: 50%;
+  @media screen and (max-width: 1200px) {
     font-size: 35px;
   }
-
-  .search-container {
-    width: 30vw;
-  }
 }
 
-@media screen and (max-width: 800px) {
-  .search-container {
-    width: 100%;
-  }
+.right-header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
+.left {
+  width: 250px;
+  margin-right: 50px;
+}
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .search-container {
   display: flex;
   align-items: center;
@@ -75,8 +78,13 @@
   padding-left: 20px;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
   width: 15vw;
+  @media screen and (max-width: 1200px) {
+    width: 30vw;
+  }
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 }
-
 .search-input {
   width: 100%;
   padding: 12px 12px 12px 12px;
@@ -85,12 +93,10 @@
   border-radius: 8px;
   transition: border 0.3s ease-in-out;
 }
-
 .search-container:focus {
   border-color: #3b82f6;
   box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
 }
-
 .search-icon {
   width: 20px;
   height: 20px;
@@ -100,12 +106,6 @@
   display: flex;
   align-items: flex-end;
   font-family: Arial, sans-serif;
-}
-
-.right-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 }
 
 .sort-dropdown label {
@@ -189,12 +189,10 @@
   color: green;
   font-size: 16px;
 }
-
 .sold {
   font-weight: bold;
   color: red;
 }
-
 .pagination {
   display: flex;
   justify-content: center;
@@ -219,7 +217,6 @@
 .pagination-info {
   font-size: 14px;
 }
-
 .category-item {
   display: flex;
   align-items: center;
@@ -232,7 +229,6 @@
   text-decoration: none;
   color: inherit;
 }
-
 .category-item:hover {
   background-color: #c2c1c5;
 }
@@ -251,12 +247,10 @@
   margin-bottom: 30px;
   max-width: 100%;
 }
-
 .left {
   width: 150px;
   margin-right: 50px;
 }
-
 .right {
   flex: 1;
   display: flex;
