@@ -1,35 +1,39 @@
-@if(isAdmin()){
-<button class="add-button" (click)="navigateToAddEvent()">
-  Adaugă eveniment
-</button>
-}
-<h1>Events</h1>
-<div></div>
-<div class="content">
-  @if(isLoading){
-  <app-loading-spinner></app-loading-spinner>
-  }@else{ @if (selectedEvent != undefined) {
-  <div class="selected-event">
-    <div>
-      <img [src]="selectedEvent.image" />
-    </div>
-    <h1>
-      {{ selectedEvent.title }}
-    </h1>
-    <div [innerHTML]="selectedEvent.description"></div>
-    @if(isAdmin()){
-    <button class="delete-button" (click)="deleteEvent()">Sterge</button>
-    }
-  </div>
-  }
-
-  <div class="events-list">
-    @for (item of eventsList; track $index) {
-    <div class="event-card" (click)="eventClicked(item)">
-      <img [src]="item.image" [alt]="imageAltBuild(item, $index)" />
-      <h2 class="event-title">{{ item.title }}</h2>
-    </div>
-    }
-  </div>
-  }
+<h1>
+    Events
+</h1>
+<div>
 </div>
+<div class="content">
+
+@if (selectedEvent != undefined) {
+    <div class="selected-event">
+        <div>
+            <img [src]="selectedEvent.imagePath">
+        </div>
+        <h1>
+            {{selectedEvent.title}}
+        </h1>
+        <div [innerHTML]="selectedEvent.content">
+            <iframe 
+    [src]="selectedEvent.links"
+    width="560" 
+    height="315" 
+    style="border:none;overflow:hidden" 
+    scrolling="no" 
+    frameborder="0" 
+    allowfullscreen="true">
+</iframe>
+        </div>
+    </div>
+}
+
+<div class="events-list">
+@for (item of eventsList; track $index) {
+    <div class="event-card" (click)="eventClicked(item)">
+        <img [src]="item.imagePath" [alt]="imageAltBuild(item,$index)">
+        <h2 class="event-title">{{item.title}}</h2>
+    </div>
+}
+</div>
+</div>
+

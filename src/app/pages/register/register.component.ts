@@ -1,35 +1,18 @@
-import { JwtDecoderService } from './../../services/jwt-decoder.service';
 import { Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CAPTCHA_KEY, GOOGLE_CLIENT_ID } from '../../data/Constants/Constants';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { NavigateService } from '../../services/navigate.service';
-import { HttpRequestsService } from '../../services/http-requests.service';
-import { SessionStorageService } from '../../services/session-storage.service';
 
 declare const google: any;
 
 @Component({
   selector: 'app-register',
-  imports: [
-    RouterModule,
-    CommonModule,
-    ReactiveFormsModule,
-    RecaptchaModule,
-    RecaptchaFormsModule,
-  ],
+  imports: [RouterModule,CommonModule, ReactiveFormsModule, RecaptchaModule, RecaptchaFormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -40,109 +23,60 @@ export class RegisterComponent {
   ngOnInit(): void {
     this.initializeGoogleSignIn();
   }
-  constructor(
-    private jwtDecoderService: JwtDecoderService,
-    private fb: FormBuilder,
-    private ngZone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private navigateService: NavigateService,
-    private httpRequestsService: HttpRequestsService,
-    private sessionStorageService: SessionStorageService
-  ) {
-    this.registerForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            this.passwordValidator,
-          ],
-        ],
-        confirmPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            this.passwordValidator,
-          ],
-        ],
-        recaptcha: ['', Validators.required],
-      },
-      {
-        validators: this.passwordMatchValidator('password', 'confirmPassword'),
-      }
-    );
-  }
-
-  initializeGoogleSignIn() {
-    if (isPlatformBrowser(this.platformId)) {
-      google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: (response: any) => this.handleCredentialResponse(response),
-      });
-
-      google.accounts.id.renderButton(
-        document.getElementById('google-signup-button') as HTMLElement,
-        {
-          theme: 'outline',
-          size: 'large',
-          type: 'standard',
-          text: 'signup_with',
-        } // customization attributes
-      );
-    }
-  }
-
-  async handleCredentialResponse(response: any) {
-    var tokenBody = this.jwtDecoderService.decodeToken(response.credential);
-
-    const body = {
-      email: tokenBody.email,
-      sub: tokenBody.sub,
-    };
-
-    await this.httpRequestsService
-      .post('auth/signupwithgoogle', body)
-      .subscribe({
-        next: (response: any) => {
-          this.sessionStorageService.setItem('token', response.access_token);
-          this.navigateService.navigate('');
-        },
-        error: (err) => console.error('Login failed', err),
-      });
-    this.ngZone.run(() => {
-      // Update your application state here, e.g., store user info, navigate, etc.
+  constructor(private fb: FormBuilder, private ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: Object, private navigateService: NavigateService) {
+    this.registerForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6),this.passwordValidator]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6),this.passwordValidator]],
+      recaptcha: ['', Validators.required]
+    },{
+      validators:this.passwordMatchValidator("password","confirmPassword")
     });
   }
 
-  async onSubmit() {
-    if (this.registerForm.valid) {
-      const body = {
-        email: this.registerForm.value.email,
-        password: this.registerForm.value.password,
-        confirmPassword: this.registerForm.value.confirmPassword,
-      };
+  initializeGoogleSignIn() {
+      if (isPlatformBrowser(this.platformId)) {
+        google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: (response: any) => this.handleCredentialResponse(response)
+        });
 
-      (await this.httpRequestsService.post('auth/signup', body)).subscribe({
-        next: (response: any) => {
-          this.sessionStorageService.setItem('token', response.access_token);
-          this.navigateService.navigate('');
-        },
-        error: (err) => console.error('Register failed', err),
-      });
-    }
+        google.accounts.id.renderButton(
+          document.getElementById("google-signup-button") as HTMLElement,
+          {
+            theme: 'outline', size: 'large',
+            type: 'standard',
+            text: "signup_with"
+          }  // customization attributes
+        );
+      }
   }
 
-  passwordMatchValidator(
-    password: string,
-    confirmPassword: string
-  ): ValidatorFn {
+  handleCredentialResponse(response: any) {
+    console.log('Encoded JWT ID token: ' + response.credential);
+
+       // You can decode the JWT token here or send it to your backend for verification
+       // For demonstration, we'll just log it
+
+       // If using NgZone, ensure any UI updates are run inside Angular's zone
+    this.ngZone.run(() => {
+         // Update your application state here, e.g., store user info, navigate, etc.
+    });
+  }
+
+  onSubmit() {
+    if (this.registerForm.valid) {
+      // this.authService.setToken(this.loginForm.value.email);
+      console.log('Form Submitted', this.registerForm.value);
+      this.navigateService.navigate("");
+    }
+  }
+  
+  passwordMatchValidator(password: string, confirmPassword: string): ValidatorFn {
     return (formGroup: AbstractControl): ValidationErrors | null => {
       const pass = formGroup.get(password)?.value;
       const confirmPass = formGroup.get(confirmPassword)?.value;
-
+  
       if (pass !== confirmPass) {
         formGroup.get(confirmPassword)?.setErrors({ passwordMismatch: true });
         return { passwordMismatch: true };
@@ -163,15 +97,22 @@ export class RegisterComponent {
 
     if (!hasUpperCase || !hasNumber || !isValidLength) {
       return {
-        passwordStrength:
-          'Parola trebuie sa aibă minim 6 caractere, să conțină cifră și literă mare',
+        passwordStrength: 'Parola trebuie sa aibă minim 6 caractere, să conțină cifră și literă mare'
       };
     }
     return null;
   }
 
+  handleGoogleResponse(response: any) {
+    
+    console.log('Google Credential:', response);
+    const credential = response.credential;
+    console.log('Google Credential:', credential);
+
+  }
+
   navigateAndRefresh() {
-    this.navigateService.navigateAndRefresh('login');
+    this.navigateService.navigateAndRefresh("login");
   }
 
   togglePasswordVisibility() {
@@ -181,8 +122,8 @@ export class RegisterComponent {
   toggleConfirmPasswordVisibility() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
-
+  
   goBack(): void {
-    this.navigateService.navigate('');
+    this.navigateService.navigate("");
   }
 }

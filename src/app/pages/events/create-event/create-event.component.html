@@ -2,29 +2,23 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label>Titlu</label>
-    <input type="text" formControlName="title" class="form-input" />
+    <input type="text" formControlName="title" class="form-input"/>
   </div>
   <div class="form-group">
     <label>Imagine principală</label>
-    <input
-      type="file"
-      (change)="onFileChange($event)"
-      accept="image/*"
-      class="form-input"
-    />
+    <input type="file" (change)="onFileChange($event)" accept="image/*" class="form-input"/>
     <div *ngIf="imagePreview">
       <img [src]="imagePreview" alt="Image Preview" width="200" />
     </div>
   </div>
-
+    
   <div class="form-group">
     <label>Conținut</label>
     <div class="NgxEditor__Wrapper">
-      <ngx-editor-menu [editor]="editor!" [toolbar]="toolbar">
-      </ngx-editor-menu>
-      <ngx-editor [editor]="editor!" formControlName="editorContent">
-      </ngx-editor>
+      <ngx-editor-menu [editor]="editor!" [toolbar]="toolbar"> </ngx-editor-menu>
+      <ngx-editor [editor]="editor!" formControlName="editorContent"> </ngx-editor>
     </div>
   </div>
   <button type="submit" [disabled]="form.invalid">Salvează</button>
-</form>
+  </form>
+

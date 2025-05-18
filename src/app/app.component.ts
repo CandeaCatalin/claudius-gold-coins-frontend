@@ -1,5 +1,3 @@
-import { CartService } from './services/cart.service';
-import { LocalStorageService } from './services/local-storage.service';
 import { Component } from '@angular/core';
 import {
   ActivatedRoute,
@@ -10,12 +8,11 @@ import {
 import { HeaderComponent } from './components/header/header.component';
 import { Title } from '@angular/platform-browser';
 import { filter, map } from 'rxjs';
-import { FooterComponent } from './components/footer/footer.component';
-import { ToastComponent } from './components/toast/toast.component';
+import { FooterComponent } from "./components/footer/footer.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, ToastComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -23,7 +20,7 @@ export class AppComponent {
   constructor(
     private router: Router,
     private titleService: Title,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
     this.router.events
       .pipe(

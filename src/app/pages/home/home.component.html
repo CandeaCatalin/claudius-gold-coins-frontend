@@ -1,48 +1,31 @@
 <div class="main-page">
-  <h2>
+<h2>
     <b>CLAUDIUS GOLD COINS</b>
-  </h2>
-  <div class="container">
+</h2>
+<div class="container">
     <div class="left">
-      @for (category of product_categories; track $index) {
-      <a
-        [routerLink]="category.link"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="category-item"
-      >
-        <img
-          class="category-image"
-          src="{{ category.imagePath }}"
-          alt="{{ category.name }}-image"
-        />
-        <p class="category-text">
-          {{ category.name }}
-        </p>
-      </a>
-      }
+        @for (category of product_categories; track $index) {
+            <a [routerLink]="category.link" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="category-item">
+                <img class="category-image" src="{{category.imagePath}}" alt="{{category.name}}-image"/>
+                <p class="category-text">
+                    {{category.name}}
+                </p>
+        </a> 
+        }
     </div>
     <div class="right">
-      <h1 class="right-side-title">NIHIL SINE DEO!</h1>
-      <p class="right-side-text">
-        Iubesc arta prin care sunt făurite monedele, cu cât o monedă este mai
-        veche cu atât poate fi mai frumoasă și mai valoroasă.
-      </p>
-      <p class="right-side-text">
-        Un lucru foarte important, o monedă mică poate valora foarte mult de
-        aceea încercăm să identificăm fiecare monedă, să-i determinăm gradul de
-        raritate, să-i determinăm valoarea pentru a nu fi topită sau distrusă și
-        să o comercializăm spre un colecționar care să o aprecieze pentru
-        adevărata ei valoare numismatică.
-      </p>
-      <a
-        routerLink="/despre-noi"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="right-side-button"
-      >
-        Află mai multe!
-      </a>
+        <h1 class="right-side-title">
+            NIHIL SINE DEO!
+        </h1>
+        <p class="right-side-text">
+            Iubesc arta prin care sunt făurite monedele, cu cât o monedă este mai veche cu atât poate fi mai frumoasă și mai valoroasă.
+        </p>
+        <p class="right-side-text">
+            Un lucru foarte important, o monedă mică poate valora foarte mult de aceea încercăm să identificăm fiecare monedă, să-i determinăm gradul de raritate, să-i determinăm valoarea pentru a nu fi topită sau distrusă și să o comercializăm spre un colecționar care să o aprecieze pentru adevărata ei valoare numismatică.
+        </p>
+        <a routerLink="/despre-noi" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="right-side-button">
+            Află mai multe!
+        </a>
     </div>
-  </div>
+</div>
 </div>

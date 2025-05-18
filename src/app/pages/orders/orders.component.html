@@ -1,58 +1,50 @@
 <div class="container mt-4">
-  <h3>{{ title }}</h3>
-
-  <input
-    type="text"
-    class="form-control mb-2"
-    placeholder="Search..."
-    (input)="applyFilter($event)"
-  />
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th (click)="sortData('id')">Order ID</th>
-        <th (click)="sortData('user.name')">User ID</th>
-        <th (click)="sortData('product.name')">Nume produs</th>
-        <th (click)="sortData('product.category')">Categorie</th>
-        <th (click)="sortData('product.price')">Preț(euro)</th>
-        <th>Price Modifier(%)</th>
-        <th (click)="sortData('finalPrice')">Preț Final(euro)</th>
-        <th (click)="sortData('status')">Status</th>
-        <th>Adresă</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let order of paginatedOrders">
-        <td>{{ order.id }}</td>
-        <td>{{ order.user.name }}</td>
-        <td>{{ order.product.name }}</td>
-        <td>{{ order.product.category }}</td>
-        <td>{{ order.product.price }}</td>
-        <td>{{ order.product.priceModifier }}</td>
-        <td>{{ order.finalPrice }}</td>
-        <td>{{ order.status }}</td>
-        <td>{{ order.address }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Pagination Controls -->
-  <nav>
-    <ul class="pagination">
-      <li class="page-item" [class.disabled]="currentPage === 1">
-        <button class="page-link" (click)="previousPage()">Previous</button>
-      </li>
-      <li
-        class="page-item"
-        *ngFor="let page of totalPagesArray"
-        [class.active]="page === currentPage"
-      >
-        <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
-      </li>
-      <li class="page-item" [class.disabled]="currentPage === totalPages">
-        <button class="page-link" (click)="nextPage()">Next</button>
-      </li>
-    </ul>
-  </nav>
-</div>
+    <h3>{{title}}</h3>
+  
+    <input type="text" class="form-control mb-2" placeholder="Search..." (input)="applyFilter($event)">
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th (click)="sortData('id')">Order ID</th>
+          <th (click)="sortData('user.name')">User ID</th>
+          <th (click)="sortData('product.name')">Nume produs</th>
+          <th (click)="sortData('product.category')">Categorie</th>
+          <th (click)="sortData('product.price')">Preț(euro)</th>
+          <th>Price Modifier(%)</th>
+          <th (click)="sortData('finalPrice')">Preț Final(euro)</th>
+          <th (click)="sortData('status')">Status</th>
+          <th>Adresă</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of paginatedOrders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.user.name }}</td>
+          <td>{{ order.product.name }}</td>
+          <td>{{ order.product.category }}</td>
+          <td>{{ order.product.price }}</td>
+          <td>{{ order.product.priceModifier }}</td>
+          <td>{{ order.finalPrice }}</td>
+          <td>{{ order.status }}</td>
+          <td>{{ order.address }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Pagination Controls -->
+    <nav>
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="previousPage()">Previous</button>
+        </li>
+        <li class="page-item" *ngFor="let page of totalPagesArray" [class.active]="page === currentPage">
+          <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="nextPage()">Next</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  

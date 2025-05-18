@@ -1,128 +1,71 @@
 <script src="https://accounts.google.com/gsi/client" async></script>
-<button (click)="goBack()" class="back-button">&#8592; Back</button>
+<button (click)="goBack()" class="back-button">
+    &#8592; Back
+  </button>
 <div class="content">
-  <div class="title">înregistrează-te</div>
-  <div class="login-container">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" formControlName="email" class="form-input" />
-        <div
-          *ngIf="
-            registerForm.get('email')?.invalid &&
-            registerForm.get('email')?.touched
-          "
-          class="error"
-        >
-          <small *ngIf="registerForm.get('email')?.errors?.['required']"
-            >Emailul este obligatoriu</small
-          >
-          <small *ngIf="registerForm.get('email')?.errors?.['email']"
-            >Format invalid.</small
-          >
-        </div>
-      </div>
+    <div class="title">
+        Conectează-te
+    </div>
+        <div class="login-container">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" formControlName="email" class="form-input"/>
+                  <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
+                    <small *ngIf="registerForm.get('email')?.errors?.['required']">Emailul este obligatoriu</small>
+                    <small *ngIf="registerForm.get('email')?.errors?.['email']">Format invalid.</small>
+                  </div>
+                </div>
+            
+                <div class="form-group">
+                  <label>Parolă</label>
+                  <div class="password-wrapper">
+                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input"/>
+                    <button type="button" class="eye-btn" (click)="togglePasswordVisibility()">
+                      <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                    </button>
+                  </div>
+                  <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">
+                    <small *ngIf="registerForm.get('password')?.errors?.['required']">Parola este obligatorie</small>
+                    <small *ngIf="registerForm.get('password')?.errors">
+                        {{ registerForm.get('password')?.errors?.['passwordStrength'] }}
+                      </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label>Confirmă Parola</label>
+                    <div class="password-wrapper">
+                        <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" class="form-input"/>
+                        <button type="button" class="eye-btn" (click)="toggleConfirmPasswordVisibility()">
+                          <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                        </button>
+                      </div>
+                    <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('password')?.touched" class="error">
+                      <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirmarea parolei este obligatorie</small>
+                      <div *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+                        Parolele nu coincid.
+                      </div>
+                    </div>
+                  </div>
+            
+                <div class="form-group">
+                  <re-captcha formControlName="recaptcha" [siteKey]="captchaKey"></re-captcha>
+                  <div *ngIf="registerForm.get('recaptcha')?.invalid && registerForm.get('recaptcha')?.touched" class="error">
+                    <small>Recaptcha este obligatoriu.</small>
+                  </div>
+                </div>
+            
+                <button type="submit" class="login" [disabled]="registerForm.invalid">Conectează-te</button>
+              </form>
 
-      <div class="form-group">
-        <label>Parolă</label>
-        <div class="password-wrapper">
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            formControlName="password"
-            class="form-input"
-          />
-          <button
-            type="button"
-            class="eye-btn"
-            (click)="togglePasswordVisibility()"
-          >
-            <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
-          </button>
-        </div>
-        <div
-          *ngIf="
-            registerForm.get('password')?.invalid &&
-            registerForm.get('password')?.touched
-          "
-          class="error"
-        >
-          <small *ngIf="registerForm.get('password')?.errors?.['required']"
-            >Parola este obligatorie</small
-          >
-          <small *ngIf="registerForm.get('password')?.errors">
-            {{ registerForm.get('password')?.errors?.['passwordStrength'] }}
-          </small>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Confirmă Parola</label>
-        <div class="password-wrapper">
-          <input
-            [type]="showConfirmPassword ? 'text' : 'password'"
-            formControlName="confirmPassword"
-            class="form-input"
-          />
-          <button
-            type="button"
-            class="eye-btn"
-            (click)="toggleConfirmPasswordVisibility()"
-          >
-            <i
-              [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"
-            ></i>
-          </button>
-        </div>
-        <div
-          *ngIf="
-            registerForm.get('confirmPassword')?.invalid &&
-            registerForm.get('password')?.touched
-          "
-          class="error"
-        >
-          <small
-            *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
-            >Confirmarea parolei este obligatorie</small
-          >
-          <div
-            *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
-          >
-            Parolele nu coincid.
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <re-captcha
-          formControlName="recaptcha"
-          [siteKey]="captchaKey"
-        ></re-captcha>
-        <div
-          *ngIf="
-            registerForm.get('recaptcha')?.invalid &&
-            registerForm.get('recaptcha')?.touched
-          "
-          class="error"
-        >
-          <small>Recaptcha este obligatoriu.</small>
-        </div>
-      </div>
-
-      <button type="submit" class="login" [disabled]="registerForm.invalid">
-        Înregistrează-te
-      </button>
-    </form>
-
-    Ai deja cont?
-    <a
-      routerLink="/register"
-      routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="register-link"
-      (click)="navigateAndRefresh()"
-    >
-      Conectează-te
-    </a>
-  </div>
-  <div class="horisontal-lines">sau</div>
-  <div id="google-signup-button"></div>
+    
+        Ai deja cont?
+        <a routerLink="/register" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="register-link" (click)="navigateAndRefresh()">
+            Conectează-te
+        </a>
+    </div>
+    <div class="horisontal-lines">
+      sau
+    </div>
+    <div id="google-signup-button"></div>
 </div>

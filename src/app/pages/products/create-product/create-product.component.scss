@@ -1,87 +1,88 @@
-.form-group {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  margin-bottom: 10px;
+.form-group{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 10px;
 }
 
-.form-input {
-  border-radius: 0;
-  outline: none;
-  font-size: 16px;
-  padding: 5px 0;
-  margin-bottom: 10px;
+.form-input{
+    border-radius: 0;
+    outline: none; 
+    font-size: 16px; 
+    padding: 5px 0; 
+    margin-bottom:10px;
 }
-label {
-  font-size: 20px;
-  font-weight: bold;
+label{
+    font-size: 20px;
+    font-weight: bold;
 }
 /* Scrollable Image List */
 .image-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  padding: 10px;
-  background: #f9f9f9;
-}
-
-/* Image Wrapper */
-.image-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-/* Small Image Preview */
-.image-preview {
-  width: auto;
-  height: 100px; /* Fixed height for all images */
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  margin: 0px 10px;
-  transition: transform 0.2s;
-}
-
-.image-preview:hover {
-  transform: scale(1.1);
-}
-
-/* Remove Button */
-.remove-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Full-Size Image Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.full-image {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 8px;
-}
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #f9f9f9;
+  }
+  
+  /* Image Wrapper */
+  .image-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Small Image Preview */
+  .image-preview {
+    width: auto;
+    height: 100px; /* Fixed height for all images */
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin: 0px 10px;
+    transition: transform 0.2s;
+  }
+  
+  .image-preview:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Remove Button */
+  .remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Full-Size Image Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .full-image {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+  }
+  

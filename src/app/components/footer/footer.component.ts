@@ -10,38 +10,32 @@ import { DONT_DISPLAY_FOOTER_PAGES } from '../../data/Constants/RoutesToDisplayC
   selector: 'app-footer',
   imports: [RouterModule],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
+  styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+
   public menuItems: MenuItemModel[] = MENU_ITEMS;
   public screenWidth: number = 0;
   public display: boolean = true;
   year: number = new Date().getFullYear();
 
-  private subscriptions: Subscription[] = [];
-
-  constructor(
-    public router: Router,
-    private windowRefService: WindowRefService
-  ) {}
-
-  ngOnInit() {
-    this.subscriptions.push(
-      this.windowRefService.screenWidth$.subscribe((width) => {
+    private subscriptions: Subscription[] = []; 
+  
+    constructor(private router: Router, private windowRefService: WindowRefService) {}
+  
+    ngOnInit() {
+      this.subscriptions.push(this.windowRefService.screenWidth$.subscribe(width => {
         this.screenWidth = width;
-      })
-    );
+      }));
 
-    this.subscriptions.push(
-      this.router.events.subscribe(() => {
-        this.display = !DONT_DISPLAY_FOOTER_PAGES.includes(this.router.url);
-      })
-    );
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
+      this.subscriptions.push(this.router.events.subscribe(() => {
+        this.display = !DONT_DISPLAY_FOOTER_PAGES.includes(this.router.url); 
+      }));
+    }
+  
+    ngOnDestroy() {
+      this.subscriptions.forEach(subscription => {
+        subscription.unsubscribe();  
+      });
+    }
 }

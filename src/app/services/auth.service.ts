@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { SessionStorage } from '../data/Constants/Constants';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
+
   private tokenKey = SessionStorage.jwt_token;
 
   constructor() {}
